@@ -1,0 +1,18 @@
+.fineDust {
+	font-family: 'Nanum Gothic Coding', monospace;
+}
+.module.fineDust {
+	margin-bottom: 3px;
+}
+.veryBad {
+	color: #D10404;
+}
+.bad {
+	color: #FF8000;
+}
+.notBad {
+	color: #21610B;
+}
+.good {
+	color: #00BFFF;
+}
