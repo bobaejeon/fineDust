@@ -1,4 +1,3 @@
-/* global Module */
 Module.register("fineDust",{
 	// Default module config.
 	defaults: {
@@ -25,7 +24,7 @@ Module.register("fineDust",{
 	getDom: function(){
 		let wrapper = document.createElement("div");
 		wrapper.className = "container";
-		
+
 		if (this.config.apiKey === "") {
 			wrapper.innerHTML = "Please set the apiKey in the config for module: " + this.name;
 			wrapper.className = "dimmed light small";
@@ -34,26 +33,26 @@ Module.register("fineDust",{
 
 		let small = document.createElement("div");
 		small.className = "normal medium fineDust";
-		
+
 		let fineDust = document.createElement("span");
 
 		switch(this.type){
-			case "p1" : fineDust.innerHTML = "미세먼지: "; break;
-			case "p2" : fineDust.innerHTML = "초미세먼지: "; break;
-			default: fineDust.innerHTML = this.type + ": "; break;
+			case "p1" : fineDust.innerHTML = "Fine Dust: "; break;
+			case "p2" : fineDust.innerHTML = "Ultrafine Dust: "; break;
+			default: fineDust.innerHTML = "Air Pollution "; break;
 		}
 		small.appendChild(fineDust);
-		
+
 		let fineDustInfo = document.createElement("span");
 		switch(this.level){
-			case "매우나쁨": fineDustInfo.className = "veryBad"; break;
-			case "나쁨": fineDustInfo.className = "bad"; break;
-			case "보통": fineDustInfo.className = "notBad"; break;
-			case "좋음": fineDustInfo.className = "good"; break;
+			case "Very Unhealthy :(": fineDustInfo.className = "veryBad"; break;
+			case "Unhealthy": fineDustInfo.className = "bad"; break;
+			case "Moderate": fineDustInfo.className = "notBad"; break;
+			case "Good :)": fineDustInfo.className = "good"; break;
 		}
 		fineDustInfo.innerHTML = this.level;
 		small.appendChild(fineDustInfo);
-		
+
 		wrapper.appendChild(small);
 		return wrapper;
 	},
@@ -63,12 +62,12 @@ Module.register("fineDust",{
 			return;
 		}
 		const url = this.apiBase + this.config.apiKey;
-		
+
 		let data = await fetch(url)
 			.then(result => result.status < 400 ? result : Promise.reject())
 			.then(result => result.status === 200 ? result.json() : result)
 			.catch(error => Log.error(error));
-		
+
 		if(!data){
 			Log.error("failed to load data");
 			return;
@@ -86,40 +85,40 @@ Module.register("fineDust",{
 	processFineDust: function(data){
 		this.aqius = data.data.current.pollution.aqius;
 		this.type = data.data.current.pollution.mainus;
-		
+
 		let aqius = this.aqius;
 		if(this.type === "p2"){
 			if(aqius >= 76){
-				this.level = "매우나쁨";
+				this.level = "Very Unhealthy :(";
 			}
 			else if(aqius >= 36){
-				this.level = "나쁨";
+				this.level = "Unhealthy";
 			}
 			else if(aqius >= 16){
-				this.level = "보통";
+				this.level = "Moderate";
 			}
 			else{
-				this.level = "좋음";
+				this.level = "Good :)";
 			}
 		}
 		else if(this.type === "p1"){
 			if(aqius >= 151){
-				this.level = "매우나쁨";
+				this.level = "Very Unhealthy :(";
 			}
 			else if(aqius >= 81){
-				this.level = "나쁨";
+				this.level = "Unhealthy";
 			}
 			else if(aqius >= 31){
-				this.level = "보통";
+				this.level = "Moderate";
 			}
 			else{
-				this.level = "좋음";
+				this.level = "Good :)";
 			}
 		}
 		else{
-			this.level = this.aqius;
+			this.level = "Good :)";
 		}
-			
+
 		this.updateDom(this.config.animationSpeed);
 	},
 });
