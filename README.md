@@ -1,6 +1,6 @@
 # MagicMirror² Module: fineDust
-Simply displays air pollution status in Korean. It shows the level of the pollution depends on the type.
-<img src="https://user-images.githubusercontent.com/67196344/85206328-44272280-b35c-11ea-951f-25b798af75a8.png" width=40%>
+Simply displays air pollution status in <del>Korean</del> English(update 26.8.2020). It shows the level of the pollution depends on the type.
+<img src="https://user-images.githubusercontent.com/67196344/91318890-b140b380-e7f6-11ea-87ba-57987fda3ea9.png" width=40%>
 
 This module is based on AirVisual API. Get an APIkey, write it in config, then it's all done.
 
